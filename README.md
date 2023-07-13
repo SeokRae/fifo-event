@@ -67,3 +67,46 @@ docker run --name myredis -d -p 6379:6379 redis
 incr coupon_count
 
 ```
+
+- 카프카 작업환경 구축
+
+```yml
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```
+
+- 도커 컴포즈 실행 명령어
+ 
+```bash
+docker-compose up -d
+
+docker-compose down
+```
+
+- 카프카 명령어
+
+```bash
+# 토픽 생성
+docker exec -it kafka kafka-topics.sh --bootstrap-server localhost:9092 --create --topic testTopic
+
+# 프로듀서 실행
+docker exec -it kafka kafka-console-producer.sh --topic testTopic --broker-list 0.0.0.0:9092
+
+# 컨슈머 실행
+docker exec -it kafka kafka-console-consumer.sh --topic testTopic --bootstrap-server localhost:9092
+```
