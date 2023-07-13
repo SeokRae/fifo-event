@@ -58,3 +58,12 @@ docker pull redis
 
 docker run --name myredis -d -p 6379:6379 redis
 ```
+
+
+- 레디스 native 명령어
+
+```bash
+
+incr coupon_count
+
+```
