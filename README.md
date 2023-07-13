@@ -127,3 +127,16 @@ docker exec -it kafka kafka-topics.sh --bootstrap-server localhost:9092 --create
 
 docker exec -it kafka kafka-console-consumer.sh --topic coupon_create --bootstrap-server localhost:9092 --key-deserializer "org.apache.kafka.common.serialization.StringDeserializer" --value-deserializer "org.apache.kafka.common.serialization.LongDeserializer"
 ```
+
+- 레디스 SET 명령어
+
+```bash
+sadd test 1
+
+1
+
+sadd test 1
+
+0
+
+```
