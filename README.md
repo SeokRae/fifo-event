@@ -59,6 +59,11 @@ docker pull redis
 docker run --name myredis -d -p 6379:6379 redis
 ```
 
+- 레디스 접근
+
+```bash
+docker exec -it myredis redis-cli 
+```
 
 - 레디스 native 명령어
 
@@ -109,4 +114,16 @@ docker exec -it kafka kafka-console-producer.sh --topic testTopic --broker-list 
 
 # 컨슈머 실행
 docker exec -it kafka kafka-console-consumer.sh --topic testTopic --bootstrap-server localhost:9092
+```
+
+- topic 생성
+
+```bash
+# Topic 생성
+
+docker exec -it kafka kafka-topics.sh --bootstrap-server localhost:9092 --create --topic coupon_create
+
+# Consumer 실행
+
+docker exec -it kafka kafka-console-consumer.sh --topic coupon_create --bootstrap-server localhost:9092 --key-deserializer "org.apache.kafka.common.serialization.StringDeserializer" --value-deserializer "org.apache.kafka.common.serialization.LongDeserializer"
 ```

@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-class ApplyServiceRedisTest {
+class ApplyServiceKafkaTest {
 
     @Autowired
     private ApplyService applyService;
@@ -31,7 +31,7 @@ class ApplyServiceRedisTest {
         couponCountRepository.flush();
     }
 
-    @DisplayName("쿠폰 여러번 응모 레디스로 동시성 이슈 확인")
+    @DisplayName("쿠폰 여러번 응모 카프카로 동시성 처리 확인")
     @Test
     void 여러번_응모() {
         int threadCount = 1000;
@@ -43,7 +43,7 @@ class ApplyServiceRedisTest {
 
             executorService.submit(() -> {
                 try {
-                    applyService.applyRedis(userId);
+                    applyService.applyKafka(userId);
                 } finally {
                     countDownLatch.countDown();
                 }
