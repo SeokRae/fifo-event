@@ -33,7 +33,7 @@ class ApplyServiceKafkaTest {
 
     @DisplayName("쿠폰 여러번 응모 카프카로 동시성 처리 확인")
     @Test
-    void 여러번_응모() {
+    void 여러번_응모() throws InterruptedException {
         int threadCount = 1000;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
@@ -55,6 +55,8 @@ class ApplyServiceKafkaTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        Thread.sleep(5000); // 준 실시간 처리 확인을 위해 5초 대기
 
         long count = couponRepository.count();
 
