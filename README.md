@@ -40,3 +40,21 @@ spring:
 - 101개 이상이 지급되면 안된다.
 - 순간적으로 몰리는 트래픽을 버틸 수 있어야합니다.
 ```
+
+- 동시성 이슈 확인
+
+```text
+expected: 100L
+ but was: 122L
+org.opentest4j.AssertionFailedError: 
+expected: 100L
+ but was: 122L
+```
+
+- 레디스 작업환경 구축
+
+```bash
+docker pull redis
+
+docker run --name myredis -d -p 6379:6379 redis
+```
